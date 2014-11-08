@@ -1,4 +1,5 @@
 #define HANGOUT 1
+#define FORTUNA 1	
 int STYLE_KEY = 1;
 
 #define WL_LEN 666			// 671-6+1

@@ -13,6 +13,9 @@ TextLayer *layer_time_text;
 TextLayer *layer_word_text;
 TextLayer *layer_ulne_text;
 #endif
+#ifdef FORTUNA
+TextLayer *layer_subj_text;
+#endif
 Layer *layer_line;
 
 BitmapLayer *layer_batt_img;
@@ -173,6 +176,9 @@ void update_time(struct tm *tick_time) {
 	static char word_text[16];
 	static char owrd_text[32];
     static char blanks[]    = "                               ";
+#ifdef FORTUNA
+	static char subj_text[8];
+#endif
 //	static char ulne_text[16];
 //    static char underline[] = "= = = = = = = = = = = = = = = =";
 	if (new_word) {
@@ -185,6 +191,10 @@ void update_time(struct tm *tick_time) {
   		owrd_text[2*word_len] = '\0';
 //		strncpy(ulne_text, underline, 2*word_len-1); 
 //		ulne_text[2*word_len] = '\0';
+#ifdef FORTUNA
+	    strcpy(subj_text, "Place");
+	    text_layer_set_text(layer_subj_text, subj_text);
+#endif
 		new_word = false;
 	} else {
 		if (lttr_msk == cmpl_msk) {
@@ -309,6 +319,13 @@ void handle_init(void) {
 //    text_layer_set_font(layer_ulne_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_22)));
 //    text_layer_set_text_alignment(layer_ulne_text, GTextAlignmentCenter);
 #endif
+#ifdef FORTUNA
+	layer_subj_text = text_layer_create(GRect(30, 5, 90, 25));
+    text_layer_set_text_color(layer_subj_text, GColorWhite);
+	text_layer_set_background_color(layer_subj_text, GColorClear);
+    text_layer_set_font(layer_word_text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
+    text_layer_set_text_alignment(layer_subj_text, GTextAlignmentCenter);
+#endif	
 	
     text_layer_set_background_color(layer_wday_text, GColorClear);
     text_layer_set_font(layer_wday_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_22)));
@@ -343,6 +360,9 @@ void handle_init(void) {
     layer_add_child(window_layer, text_layer_get_layer(layer_word_text));
 //    layer_add_child(window_layer, text_layer_get_layer(layer_ulne_text));
 	srand(time(NULL));
+#endif
+#ifdef HANGOUT
+    layer_add_child(window_layer, text_layer_get_layer(layer_subj_text));
 #endif
 
     // style
