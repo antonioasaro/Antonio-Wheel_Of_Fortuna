@@ -15,6 +15,7 @@ TextLayer *layer_ulne_text;
 #endif
 #ifdef FORTUNA
 TextLayer *layer_subj_text;
+TextLayer *layer_word2_text;
 #endif
 Layer *layer_line;
 
@@ -179,7 +180,9 @@ void update_time(struct tm *tick_time) {
 #ifdef FORTUNA
     static int subj_idx;
 	static char subj_text[8];
-#define SUBJ_LEN 2
+	static char owrd2_text[32];
+
+	#define SUBJ_LEN 2
 	static char *sbjlst[] = {WWL_SBJ, AL_SBJ};
 	static int   lenlst[] = {WWL_LEN, AL_LEN};
 #endif
@@ -230,12 +233,15 @@ void update_time(struct tm *tick_time) {
 	}
 	
 	text_layer_set_text(layer_word_text, owrd_text);
-#ifdef FORTUNA
-	text_layer_set_text(layer_subj_text, subj_text);
-#endif
 //    text_layer_set_text(layer_ulne_text, ulne_text);
+#ifdef FORTUNA
+//	strcpy(owrd_text,  "12345678901234567890123456"); 
+	strcpy(owrd2_text, "--------------------------"); 
+	text_layer_set_text(layer_subj_text, subj_text);
+	text_layer_set_text(layer_word_text, owrd_text);
+	text_layer_set_text(layer_word2_text, owrd2_text);
 #endif
-	
+#endif
 }
 
 void set_style(void) {
@@ -303,9 +309,9 @@ void handle_init(void) {
 
     // layers
 #ifdef HANGOUT
-    layer_date_text = text_layer_create(GRect(8, 43, 144-8, 30));
-    layer_time_text = text_layer_create(GRect(7, 69, 144-7, 50));
-    layer_line      = layer_create(GRect(8, 72, 128, 2));
+    layer_date_text = text_layer_create(GRect(8, 40, 144-8, 30));
+    layer_time_text = text_layer_create(GRect(7, 66, 144-7, 50));
+    layer_line      = layer_create(GRect(8, 69, 128, 2));
 #else
     layer_date_text = text_layer_create(GRect(8, 68, 144-8, 168-68));
     layer_time_text = text_layer_create(GRect(7, 92, 144-7, 168-92));
@@ -318,24 +324,28 @@ void handle_init(void) {
     layer_conn_img  = bitmap_layer_create(GRect(118, 12, 20, 20));
 
 #ifdef HANGOUT
+#ifdef FORTUNA
+	layer_word_text = text_layer_create(GRect(7, 116, 144-7, 20));
+#else
 	layer_word_text = text_layer_create(GRect(7, 130, 144-7, 30));
+#endif
     text_layer_set_text_color(layer_word_text, GColorWhite);
 	text_layer_set_background_color(layer_word_text, GColorClear);
-    text_layer_set_font(layer_word_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_22)));
+    text_layer_set_font(layer_word_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_20)));
     text_layer_set_text_alignment(layer_word_text, GTextAlignmentCenter);
-
-//	layer_ulne_text = text_layer_create(GRect(7, 150, 144-7, 30));
-//    text_layer_set_text_color(layer_ulne_text, GColorWhite);
-//    text_layer_set_background_color(layer_ulne_text, GColorClear);
-//    text_layer_set_font(layer_ulne_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_22)));
-//    text_layer_set_text_alignment(layer_ulne_text, GTextAlignmentCenter);
 #endif
 #ifdef FORTUNA
 	layer_subj_text = text_layer_create(GRect(30, 5, 90, 25));
     text_layer_set_text_color(layer_subj_text, GColorWhite);
 	text_layer_set_background_color(layer_subj_text, GColorClear);
-    text_layer_set_font(layer_word_text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
+    text_layer_set_font(layer_subj_text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
     text_layer_set_text_alignment(layer_subj_text, GTextAlignmentCenter);
+
+	layer_word2_text = text_layer_create(GRect(7, 138, 144-7, 20));
+    text_layer_set_text_color(layer_word2_text, GColorWhite);
+	text_layer_set_background_color(layer_word2_text, GColorClear);
+    text_layer_set_font(layer_word2_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_20)));
+    text_layer_set_text_alignment(layer_word2_text, GTextAlignmentCenter);
 #endif	
 	
     text_layer_set_background_color(layer_wday_text, GColorClear);
@@ -345,7 +355,7 @@ void handle_init(void) {
     text_layer_set_font(layer_date_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_22)));
 
     text_layer_set_background_color(layer_time_text, GColorClear);
-    text_layer_set_font(layer_time_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_SUBSET_48)));
+    text_layer_set_font(layer_time_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_SUBSET_40)));
 
     text_layer_set_background_color(layer_batt_text, GColorClear);
     text_layer_set_font(layer_batt_text, fonts_get_system_font(FONT_KEY_FONT_FALLBACK));
@@ -374,6 +384,7 @@ void handle_init(void) {
 #endif
 #ifdef FORTUNA
     layer_add_child(window_layer, text_layer_get_layer(layer_subj_text));
+    layer_add_child(window_layer, text_layer_get_layer(layer_word2_text));
 #endif
 
     // style
