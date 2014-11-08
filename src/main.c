@@ -174,27 +174,29 @@ void update_time(struct tm *tick_time) {
 	static int rdm_lttr;
 	static int pick_msk;
 	static int cmpl_msk;
-	static char word_text[16];
-	static char owrd_text[32];
+	static char word_text[64];
+	static char owrd_text[128];
     static char blanks[]    = "                               ";
 #ifdef FORTUNA
     static int subj_idx;
-	static char subj_text[8];
-	static char owrd2_text[32];
+	static char subj_text[16];
+	static char owrd2_text[128];
 
 	#define SUBJ_LEN 2
-	static char *sbjlst[] = {WWL_SBJ, AL_SBJ};
-	static int   lenlst[] = {WWL_LEN, AL_LEN};
+	static char *sbjlst[]  = {WWL_SBJ, AL_SBJ, BL_SBJ};
+	static int   lenlst[]  = {WWL_LEN, AL_LEN, BL_LEN};
 #endif
 //	static char ulne_text[16];
 //    static char underline[] = "= = = = = = = = = = = = = = = =";
 	if (new_word) {
 		lttr_msk = 0; pick_msk = 0;
 #ifdef FORTUNA
-		subj_idx = rand() % SUBJ_LEN;
+		subj_idx = (rand() % SUBJ_LEN) + 1;
 	    strcpy(subj_text, sbjlst[subj_idx]);
 		word_idx = rand() % lenlst[subj_idx];
-		strcpy(word_text, wwlst[word_idx]);
+	    if (subj_idx == 0) strcpy(word_text, wwlst[word_idx]);
+	    if (subj_idx == 1) strcpy(word_text, alst[word_idx]);
+	    if (subj_idx == 2) strcpy(word_text, blst[word_idx]);
 #else
 		word_idx = rand() % WWL_LEN;
 		strcpy(word_text, wwlst[word_idx]);
@@ -235,9 +237,9 @@ void update_time(struct tm *tick_time) {
 	
 	text_layer_set_text(layer_word_text, owrd_text);
 #ifdef FORTUNA
-	strcpy(owrd2_text, "--------------------------"); 
+	strcpy(owrd2_text, "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"); 
 	text_layer_set_text(layer_subj_text, subj_text);
-	text_layer_set_text(layer_word2_text, owrd_text);
+	text_layer_set_text(layer_word2_text, owrd2_text);
 #endif
 #endif
 }
@@ -323,7 +325,7 @@ void handle_init(void) {
 
 #ifdef HANGOUT
 #ifdef FORTUNA
-	layer_word_text = text_layer_create(GRect(7, 116, 144-7, 22));
+	layer_word_text = text_layer_create(GRect(7, 118, 144-7, 22));
 #else
 	layer_word_text = text_layer_create(GRect(7, 130, 144-7, 30));
 #endif
@@ -339,7 +341,7 @@ void handle_init(void) {
     text_layer_set_font(layer_subj_text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
     text_layer_set_text_alignment(layer_subj_text, GTextAlignmentCenter);
 
-	layer_word2_text = text_layer_create(GRect(7, 140, 144-7, 22));
+	layer_word2_text = text_layer_create(GRect(7, 142, 144-7, 22));
     text_layer_set_text_color(layer_word2_text, GColorWhite);
 	text_layer_set_background_color(layer_word2_text, GColorClear);
     text_layer_set_font(layer_word2_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_20)));

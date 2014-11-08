@@ -33,20 +33,41 @@ const char *wwlst[] = {
 #define AL_LEN 10
 #define AL_SBJ "House"
 const char *alst[] = {
-    "sandbox",
-    "scratch",
-    "shaking",
-    "silence",
-    "smiling",
-    "snowman",
-    "someone",
-    "splotch",
-    "startle",
-    "stiffer"
+  "ADDRESS BOOK",
+  "ADDRESS LABELS",
+  "AFTER-SHAVE LOTION",
+  "APRIL SHOWER GEL",
+  "AREA RUGS",
+  "BABY-CHANGING TABLE",
+  "BABY POWDER",
+  "BABY SHAMPOO",
+  "BEANBAG CHAIR",
+  "BEARSKIN RUG",
+  "BIRD FEEDER"
 };
 
+// Landmark
+#define BL_LEN 13
+#define BL_SBJ "Landmark"
+const char *blst[] = {
+  "ALCATRAZ ISLAND",
+  "ARLINGTON HOUSE",
+  "BRONX ZOO",
+  "BRYCE CANYON",
+  "BUNKER HILL MONUMENT",
+  "CAPITOL HILL",
+  "CENTRAL PARK",
+  "CHRYSLER BUILDING",
+  "CIRCUS CIRCUS",
+  "DENALI NATIONAL PARK",
+  "EIFFEL TOWER",
+  "ELLIS ISLAND",
+  "EMPIRE STATE BUILDING"
+};
+
+
 /**********************************************************
-/  "ADDRESS BOOK",
+  "ADDRESS BOOK",
   "ADDRESS LABELS",
   "AFTER-SHAVE LOTION",
   "APRIL SHOWER GEL",
