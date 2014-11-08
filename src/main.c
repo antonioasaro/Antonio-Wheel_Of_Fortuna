@@ -177,24 +177,32 @@ void update_time(struct tm *tick_time) {
 	static char owrd_text[32];
     static char blanks[]    = "                               ";
 #ifdef FORTUNA
+    static int subj_idx;
 	static char subj_text[8];
+#define SUBJ_LEN 2
+	static char *sbjlst[] = {WWL_SBJ, AL_SBJ};
+	static int   lenlst[] = {WWL_LEN, AL_LEN};
 #endif
 //	static char ulne_text[16];
 //    static char underline[] = "= = = = = = = = = = = = = = = =";
 	if (new_word) {
 		lttr_msk = 0; pick_msk = 0;
-		word_idx = rand() % WL_LEN;
-		strcpy(word_text, wlst[word_idx]);
+#ifdef FORTUNA
+		subj_idx = rand() % SUBJ_LEN;
+	    strcpy(subj_text, sbjlst[subj_idx]);
+		word_idx = rand() % lenlst[subj_idx];
+		strcpy(word_text, wwlst[word_idx]);
+#else
+		word_idx = rand() % WWL_LEN;
+		strcpy(word_text, wwlst[word_idx]);
+#endif
 		word_len = strlen(word_text);
 		cmpl_msk = (1 << word_len) - 1;
 		strncpy(owrd_text, blanks, 2*word_len-1);
   		owrd_text[2*word_len] = '\0';
 //		strncpy(ulne_text, underline, 2*word_len-1); 
 //		ulne_text[2*word_len] = '\0';
-#ifdef FORTUNA
-	    strcpy(subj_text, "Place");
-	    text_layer_set_text(layer_subj_text, subj_text);
-#endif
+
 		new_word = false;
 	} else {
 		if (lttr_msk == cmpl_msk) {
@@ -222,6 +230,9 @@ void update_time(struct tm *tick_time) {
 	}
 	
 	text_layer_set_text(layer_word_text, owrd_text);
+#ifdef FORTUNA
+	text_layer_set_text(layer_subj_text, subj_text);
+#endif
 //    text_layer_set_text(layer_ulne_text, ulne_text);
 #endif
 	
@@ -361,7 +372,7 @@ void handle_init(void) {
 //    layer_add_child(window_layer, text_layer_get_layer(layer_ulne_text));
 	srand(time(NULL));
 #endif
-#ifdef HANGOUT
+#ifdef FORTUNA
     layer_add_child(window_layer, text_layer_get_layer(layer_subj_text));
 #endif
 
