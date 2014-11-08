@@ -231,15 +231,13 @@ void update_time(struct tm *tick_time) {
 			owrd_text[2*i] = '_'; 
 		}
 	}
+	APP_LOG(APP_LOG_LEVEL_DEBUG, "app error %s %s", word_text, owrd_text);
 	
 	text_layer_set_text(layer_word_text, owrd_text);
-//    text_layer_set_text(layer_ulne_text, ulne_text);
 #ifdef FORTUNA
-//	strcpy(owrd_text,  "12345678901234567890123456"); 
 	strcpy(owrd2_text, "--------------------------"); 
 	text_layer_set_text(layer_subj_text, subj_text);
-	text_layer_set_text(layer_word_text, owrd_text);
-	text_layer_set_text(layer_word2_text, owrd2_text);
+	text_layer_set_text(layer_word2_text, owrd_text);
 #endif
 #endif
 }
@@ -325,7 +323,7 @@ void handle_init(void) {
 
 #ifdef HANGOUT
 #ifdef FORTUNA
-	layer_word_text = text_layer_create(GRect(7, 116, 144-7, 20));
+	layer_word_text = text_layer_create(GRect(7, 116, 144-7, 22));
 #else
 	layer_word_text = text_layer_create(GRect(7, 130, 144-7, 30));
 #endif
@@ -341,7 +339,7 @@ void handle_init(void) {
     text_layer_set_font(layer_subj_text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
     text_layer_set_text_alignment(layer_subj_text, GTextAlignmentCenter);
 
-	layer_word2_text = text_layer_create(GRect(7, 138, 144-7, 20));
+	layer_word2_text = text_layer_create(GRect(7, 140, 144-7, 22));
     text_layer_set_text_color(layer_word2_text, GColorWhite);
 	text_layer_set_background_color(layer_word2_text, GColorClear);
     text_layer_set_font(layer_word2_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_20)));
@@ -355,7 +353,7 @@ void handle_init(void) {
     text_layer_set_font(layer_date_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_22)));
 
     text_layer_set_background_color(layer_time_text, GColorClear);
-    text_layer_set_font(layer_time_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_SUBSET_40)));
+    text_layer_set_font(layer_time_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_SUBSET_44)));
 
     text_layer_set_background_color(layer_batt_text, GColorClear);
     text_layer_set_font(layer_batt_text, fonts_get_system_font(FONT_KEY_FONT_FALLBACK));
