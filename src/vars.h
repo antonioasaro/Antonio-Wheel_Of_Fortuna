@@ -30,14 +30,19 @@ const char *wwlst[] = {
 
 #ifdef FORTUNA
 // Around The House
-#define AL_LEN 5
+#define AL_LEN 10
 #define AL_SBJ "House"
 const char *alst[] = {
-    "1hello",
-    "1what",
-    "1when",
-	"1there",
-    "1which"
+    "sandbox",
+    "scratch",
+    "shaking",
+    "silence",
+    "smiling",
+    "snowman",
+    "someone",
+    "splotch",
+    "startle",
+    "stiffer"
 };
 
 /**********************************************************
