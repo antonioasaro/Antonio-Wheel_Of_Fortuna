@@ -2,6 +2,7 @@
 #define FORTUNA 1	
 int STYLE_KEY = 1;
 
+
 // Random Words
 #define WWL_LEN 5
 #define WWL_SBJ "Random"

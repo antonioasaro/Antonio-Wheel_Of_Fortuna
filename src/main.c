@@ -15,6 +15,10 @@ TextLayer *layer_ulne_text;
 #endif
 #ifdef FORTUNA
 TextLayer *layer_subj_text;
+#define SUBJ_LEN 4
+const char *sbjlst[]  = {WWL_SBJ, AL_SBJ, BL_SBJ, FF_SBJ};
+const int   lenlst[]  = {WWL_LEN, AL_LEN, BL_LEN, FF_LEN};
+const char **strlst[] = {wwlst, alst, blst, fflst};
 #endif
 Layer *layer_line;
 
@@ -179,11 +183,8 @@ void update_time(struct tm *tick_time) {
 #ifdef FORTUNA
     static int subj_idx;
 	static char subj_text[16];
-
-	#define SUBJ_LEN 4
-	static char *sbjlst[]  = {WWL_SBJ, AL_SBJ, BL_SBJ, FF_SBJ};
-	static int   lenlst[]  = {WWL_LEN, AL_LEN, BL_LEN, FF_LEN};
 #endif
+
 //	static char ulne_text[16];
 //    static char underline[] = "= = = = = = = = = = = = = = = =";
 	if (new_word) {
@@ -192,10 +193,7 @@ void update_time(struct tm *tick_time) {
 		subj_idx = rand() % SUBJ_LEN;
 		word_idx = rand() % lenlst[subj_idx];
 	    strcpy(subj_text, sbjlst[subj_idx]);
-	    if (subj_idx == 0) strcpy(word_text, wwlst[word_idx]);
-	    if (subj_idx == 1) strcpy(word_text, alst[word_idx]);
-	    if (subj_idx == 2) strcpy(word_text, blst[word_idx]);
-	    if (subj_idx == 3) strcpy(word_text, fflst[word_idx]);
+	    strcpy(word_text, strlst[subj_idx][word_idx]);
 #else
 		word_idx = rand() % WWL_LEN;
 		strcpy(word_text, wwlst[word_idx]);
@@ -226,7 +224,7 @@ void update_time(struct tm *tick_time) {
 			owrd_text[2*i] = '_'; 
 		}
 	}
-	APP_LOG(APP_LOG_LEVEL_DEBUG, "app error %s %s", word_text, owrd_text);
+	APP_LOG(APP_LOG_LEVEL_DEBUG, "app dbg: %s %s", word_text, owrd_text);
 	
 #ifdef FORTUNA
 	text_layer_set_text(layer_subj_text, subj_text);
