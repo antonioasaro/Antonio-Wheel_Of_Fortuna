@@ -181,6 +181,7 @@ void update_time(struct tm *tick_time) {
 	static char owrd_text[64];
     static char blanks[]    = "                                                                ";
 #ifdef FORTUNA
+#define MAX_LEN 24
     static int subj_idx;
 	static char subj_text[16];
 #endif
@@ -191,8 +192,12 @@ void update_time(struct tm *tick_time) {
 		lttr_msk = 0; pick_msk = 0;
 #ifdef FORTUNA
 		subj_idx = rand() % SUBJ_LEN;
-		word_idx = rand() % lenlst[subj_idx];
 	    strcpy(subj_text, sbjlst[subj_idx]);
+	    int done = 0;
+	    while (!done) {
+		    word_idx = rand() % lenlst[subj_idx];
+			if (strlen(strlst[subj_idx][word_idx]) < MAX_LEN) { done = 1; }
+	    }
 	    strcpy(word_text, strlst[subj_idx][word_idx]);
 #else
 		word_idx = rand() % WWL_LEN;
