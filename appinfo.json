@@ -9,6 +9,11 @@
     "resources": {
         "media": [
             {
+                "file": "images/futura_ss.png",
+                "name": "IMAGE_SCREENSHOT",
+                "type": "png"
+            },
+            {
                 "file": "images/menu_icon.png",
                 "menuIcon": true,
                 "name": "IMAGE_MENU_ICON",
