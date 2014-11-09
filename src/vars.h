@@ -50,7 +50,6 @@ const char *blst[] = {
   "EMPIRE STATE BUILDING"
 };
 
-
 /**********************************************************
   "ADDRESS BOOK",
   "ADDRESS LABELS",
@@ -3114,10 +3113,11 @@ const char *eelst[] = {
   "YOUTUBE VIDEO",
   "YULE LOG",
 };
+**********************************************************/
 
 // Things
-#define FFL_LEN 5
-const char *ffsbj = "House";
+#define FF_LEN 175     		// 3307-3122+1
+#define FF_SBJ "Things"
 const char *fflst[] = {
   "ABBREVIATION OF A WORD",
   "ACCURATE BOOKKEEPING",
@@ -3307,6 +3307,7 @@ const char *fflst[] = {
   "YOUTH & BEAUTY",
 };
 
+/**********************************************************
 // Title
 #define GGL_LEN 5
 const char *ggsbj = "House";

@@ -46,12 +46,17 @@
             },
             {
                 "file": "fonts/Roboto-Condensed.ttf",
-                "name": "FONT_ROBOTO_CONDENSED_20",
+                "name": "FONT_ROBOTO_CONDENSED_18",
                 "type": "font"
             },
             {
                 "file": "fonts/Roboto-Condensed.ttf",
                 "name": "FONT_ROBOTO_CONDENSED_22",
+                "type": "font"
+            },
+            {
+                "file": "fonts/Roboto-Condensed.ttf",
+                "name": "FONT_ROBOTO_CONDENSED_20",
                 "type": "font"
             },
             {

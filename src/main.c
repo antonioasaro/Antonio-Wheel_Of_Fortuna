@@ -15,7 +15,6 @@ TextLayer *layer_ulne_text;
 #endif
 #ifdef FORTUNA
 TextLayer *layer_subj_text;
-TextLayer *layer_word2_text;
 #endif
 Layer *layer_line;
 
@@ -176,15 +175,14 @@ void update_time(struct tm *tick_time) {
 	static int cmpl_msk;
 	static char word_text[32];
 	static char owrd_text[64];
-    static char blanks[]    = "                                                              ";
+    static char blanks[]    = "                                                                ";
 #ifdef FORTUNA
     static int subj_idx;
 	static char subj_text[16];
-	static char owrd2_text[64];
 
-	#define SUBJ_LEN 3
-	static char *sbjlst[]  = {WWL_SBJ, AL_SBJ, BL_SBJ};
-	static int   lenlst[]  = {WWL_LEN, AL_LEN, BL_LEN};
+	#define SUBJ_LEN 4
+	static char *sbjlst[]  = {WWL_SBJ, AL_SBJ, BL_SBJ, FF_SBJ};
+	static int   lenlst[]  = {WWL_LEN, AL_LEN, BL_LEN, FF_LEN};
 #endif
 //	static char ulne_text[16];
 //    static char underline[] = "= = = = = = = = = = = = = = = =";
@@ -197,6 +195,7 @@ void update_time(struct tm *tick_time) {
 	    if (subj_idx == 0) strcpy(word_text, wwlst[word_idx]);
 	    if (subj_idx == 1) strcpy(word_text, alst[word_idx]);
 	    if (subj_idx == 2) strcpy(word_text, blst[word_idx]);
+	    if (subj_idx == 3) strcpy(word_text, fflst[word_idx]);
 #else
 		word_idx = rand() % WWL_LEN;
 		strcpy(word_text, wwlst[word_idx]);
@@ -220,9 +219,6 @@ void update_time(struct tm *tick_time) {
 		}
 	}
 
-//	static char debug0[32];
-//	strcpy(debug0, itoa(lttr_msk*100 + pick_msk));
-	
 	for (int i=0; i<word_len; i++) { 
 		if ((lttr_msk & (1<<i)) || (word_text[i] == ' ')) {
 			owrd_text[2*i] = word_text[i];
@@ -233,22 +229,11 @@ void update_time(struct tm *tick_time) {
 	APP_LOG(APP_LOG_LEVEL_DEBUG, "app error %s %s", word_text, owrd_text);
 	
 #ifdef FORTUNA
-	static char pt1_text[21];
-	static char pt2_text[21];
-	strcpy(pt1_text, owrd_text); pt1_text[20] = '\0';
-	if (strlen(owrd_text)>20) { 
-		strcpy(pt2_text, &owrd_text[20]); pt2_text[20] = '\0'; 
-	} else {
-		strcpy(pt2_text, " ");
-	}
 	text_layer_set_text(layer_subj_text, subj_text);
-	text_layer_set_text(layer_word_text, pt1_text);
-	text_layer_set_text(layer_word2_text, pt2_text);
-#else	
+#endif
 	text_layer_set_text(layer_word_text, owrd_text);
-#endif
-#endif
 }
+#endif
 
 void set_style(void) {
     bool inverse = persist_read_bool(STYLE_KEY);
@@ -331,14 +316,19 @@ void handle_init(void) {
 
 #ifdef HANGOUT
 #ifdef FORTUNA
-	layer_word_text = text_layer_create(GRect(7, 118, 144-7, 22));
+	layer_word_text = text_layer_create(GRect(7, 120, 144-7, 22*2));
 #else
 	layer_word_text = text_layer_create(GRect(7, 130, 144-7, 30));
 #endif
     text_layer_set_text_color(layer_word_text, GColorWhite);
 	text_layer_set_background_color(layer_word_text, GColorClear);
+#ifdef FORTUNA
+    text_layer_set_font(layer_word_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_18)));
+    text_layer_set_text_alignment(layer_word_text, GTextAlignmentLeft);
+#else
     text_layer_set_font(layer_word_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_20)));
     text_layer_set_text_alignment(layer_word_text, GTextAlignmentCenter);
+#endif
 #endif
 #ifdef FORTUNA
 	layer_subj_text = text_layer_create(GRect(30, 5, 90, 25));
@@ -346,12 +336,6 @@ void handle_init(void) {
 	text_layer_set_background_color(layer_subj_text, GColorClear);
     text_layer_set_font(layer_subj_text, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
     text_layer_set_text_alignment(layer_subj_text, GTextAlignmentCenter);
-
-	layer_word2_text = text_layer_create(GRect(7, 142, 144-7, 22));
-    text_layer_set_text_color(layer_word2_text, GColorWhite);
-	text_layer_set_background_color(layer_word2_text, GColorClear);
-    text_layer_set_font(layer_word2_text, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_20)));
-    text_layer_set_text_alignment(layer_word2_text, GTextAlignmentCenter);
 #endif	
 	
     text_layer_set_background_color(layer_wday_text, GColorClear);
@@ -390,7 +374,7 @@ void handle_init(void) {
 #endif
 #ifdef FORTUNA
     layer_add_child(window_layer, text_layer_get_layer(layer_subj_text));
-    layer_add_child(window_layer, text_layer_get_layer(layer_word2_text));
+//  layer_add_child(window_layer, text_layer_get_layer(layer_word2_text));
 #endif
 
     // style
