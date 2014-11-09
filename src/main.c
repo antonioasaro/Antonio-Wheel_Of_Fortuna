@@ -15,10 +15,10 @@ TextLayer *layer_ulne_text;
 #endif
 #ifdef FORTUNA
 TextLayer *layer_subj_text;
-#define SUBJ_LEN 4
-const char *sbjlst[]  = {WWL_SBJ, AL_SBJ, BL_SBJ, FF_SBJ};
-const int   lenlst[]  = {WWL_LEN, AL_LEN, BL_LEN, FF_LEN};
-const char **strlst[] = {wwlst, alst, blst, fflst};
+#define SUBJ_LEN 6
+const char *sbjlst[]  = {WWL_SBJ, AL_SBJ, BL_SBJ, FF_SBJ, VL_SBJ, WL_SBJ};
+const int   lenlst[]  = {WWL_LEN, AL_LEN, BL_LEN, FF_LEN, VL_LEN, WL_LEN};
+const char **strlst[] = {wwlst, alst, blst, fflst, vlst, wlst};
 #endif
 Layer *layer_line;
 

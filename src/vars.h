@@ -1782,10 +1782,11 @@ const char *ulst[] = {
   "YOUNGER SISTER",
   "YOUR BETTER HALF",
 };
+**********************************************************/
 
 // Phrase
-#define VL_LEN 5
-const char *vsbj = "House";
+#define VL_LEN 350		// 2142-1791+1
+#define VL_SBJ "Phrase"
 const char *vlst[] = {
   "A BLENDING OF CULTURES",
   "ACCESS DENIED",
@@ -2138,12 +2139,12 @@ const char *vlst[] = {
   "YOUR HEART IS IN THE RIGHT PLACE",
   "YOUR MESSAGE HAS BEEN SENT",
   "YOU TOOK THE WORDS RIGHT OUT OF MY MOUTH",
-  "ZOOM IN",
+  "ZOOM IN"
 };
 
 // Place
-#define WL_LEN 5
-const char *wsbj = "House";
+#define WL_LEN 175		// 2338-2149+1
+#define WL_SBJ "Place"
 const char *wlst[] = {
   "ABANDONED WAREHOUSE",
   "A BUSY THOROUGHFARE",
@@ -2334,12 +2335,13 @@ const char *wlst[] = {
   "WONDERFUL CITY",
   "WORKSTATION",
   "WORLD'S LONGEST STREET",
-  "WRAPAROUND PORCH",
+  "WRAPAROUND PORCH"
 };
 
+/*********************************************************
 // Places
 #define XL_LEN 5
-const char *xsbj = "House";
+#define XL_SBJ "Places"
 const char *xlst[] = {
   "ACQUATIC GARDENS",
   "AGE-OLD CHURCHES",
