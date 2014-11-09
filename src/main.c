@@ -174,15 +174,15 @@ void update_time(struct tm *tick_time) {
 	static int rdm_lttr;
 	static int pick_msk;
 	static int cmpl_msk;
-	static char word_text[64];
-	static char owrd_text[128];
-    static char blanks[]    = "                               ";
+	static char word_text[32];
+	static char owrd_text[64];
+    static char blanks[]    = "                                                              ";
 #ifdef FORTUNA
     static int subj_idx;
 	static char subj_text[16];
-	static char owrd2_text[128];
+	static char owrd2_text[64];
 
-	#define SUBJ_LEN 2
+	#define SUBJ_LEN 3
 	static char *sbjlst[]  = {WWL_SBJ, AL_SBJ, BL_SBJ};
 	static int   lenlst[]  = {WWL_LEN, AL_LEN, BL_LEN};
 #endif
@@ -191,9 +191,9 @@ void update_time(struct tm *tick_time) {
 	if (new_word) {
 		lttr_msk = 0; pick_msk = 0;
 #ifdef FORTUNA
-		subj_idx = (rand() % SUBJ_LEN) + 1;
-	    strcpy(subj_text, sbjlst[subj_idx]);
+		subj_idx = rand() % SUBJ_LEN;
 		word_idx = rand() % lenlst[subj_idx];
+	    strcpy(subj_text, sbjlst[subj_idx]);
 	    if (subj_idx == 0) strcpy(word_text, wwlst[word_idx]);
 	    if (subj_idx == 1) strcpy(word_text, alst[word_idx]);
 	    if (subj_idx == 2) strcpy(word_text, blst[word_idx]);
@@ -205,9 +205,6 @@ void update_time(struct tm *tick_time) {
 		cmpl_msk = (1 << word_len) - 1;
 		strncpy(owrd_text, blanks, 2*word_len-1);
   		owrd_text[2*word_len] = '\0';
-//		strncpy(ulne_text, underline, 2*word_len-1); 
-//		ulne_text[2*word_len] = '\0';
-
 		new_word = false;
 	} else {
 		if (lttr_msk == cmpl_msk) {
@@ -227,19 +224,28 @@ void update_time(struct tm *tick_time) {
 //	strcpy(debug0, itoa(lttr_msk*100 + pick_msk));
 	
 	for (int i=0; i<word_len; i++) { 
-		if (lttr_msk & (1<<i)) {
-			owrd_text[2*i] = word_text[i]; 
-		} else {
+		if ((lttr_msk & (1<<i)) || (word_text[i] == ' ')) {
+			owrd_text[2*i] = word_text[i];
+	} else {
 			owrd_text[2*i] = '_'; 
 		}
 	}
 	APP_LOG(APP_LOG_LEVEL_DEBUG, "app error %s %s", word_text, owrd_text);
 	
-	text_layer_set_text(layer_word_text, owrd_text);
 #ifdef FORTUNA
-	strcpy(owrd2_text, "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"); 
+	static char pt1_text[21];
+	static char pt2_text[21];
+	strcpy(pt1_text, owrd_text); pt1_text[20] = '\0';
+	if (strlen(owrd_text)>20) { 
+		strcpy(pt2_text, &owrd_text[20]); pt2_text[20] = '\0'; 
+	} else {
+		strcpy(pt2_text, " ");
+	}
 	text_layer_set_text(layer_subj_text, subj_text);
-	text_layer_set_text(layer_word2_text, owrd2_text);
+	text_layer_set_text(layer_word_text, pt1_text);
+	text_layer_set_text(layer_word2_text, pt2_text);
+#else	
+	text_layer_set_text(layer_word_text, owrd_text);
 #endif
 #endif
 }

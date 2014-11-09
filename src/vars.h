@@ -3,29 +3,14 @@
 int STYLE_KEY = 1;
 
 // Random Words
-#define WWL_LEN 20
+#define WWL_LEN 5
 #define WWL_SBJ "Random"
 const char *wwlst[] = {
-    "hello",
-    "what",
-    "when",
-	"there",
-    "which",
-    "their",
-    "other",
-    "about",
-    "these",
-    "would",
-    "write",
-    "could",
-    "first",
-    "water",
-    "sound",
-    "place",
-    "after",
-    "thing",
-    "think",
-    "great"
+  "SPLASHING",
+  "AFTERNOON",
+  "BLUEPRINT",
+  "BREAKFAST",
+  "BUTTERFLY"
  };
 
 #ifdef FORTUNA

@@ -57,13 +57,13 @@
             {
                 "characterRegex": "[:0-9]",
                 "file": "fonts/Roboto-Bold.ttf",
-                "name": "FONT_ROBOTO_BOLD_SUBSET_48",
+                "name": "FONT_ROBOTO_BOLD_SUBSET_44",
                 "type": "font"
             },
             {
                 "characterRegex": "[:0-9]",
                 "file": "fonts/Roboto-Bold.ttf",
-                "name": "FONT_ROBOTO_BOLD_SUBSET_44",
+                "name": "FONT_ROBOTO_BOLD_SUBSET_48",
                 "type": "font"
             }
         ]
