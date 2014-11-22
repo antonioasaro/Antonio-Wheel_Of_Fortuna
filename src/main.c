@@ -115,7 +115,7 @@ void line_layer_update_callback(Layer *layer, GContext* ctx) {
     graphics_fill_rect(ctx, layer_get_bounds(layer), 0, GCornerNone);
 }
 
-void update_time(struct tm *tick_time) {
+void update_minute_time(struct tm *tick_time) {
     // Need to be static because they're used by the system later.
     static char time_text[] = "00:00";
 #ifdef HANGOUT
@@ -169,6 +169,11 @@ void update_time(struct tm *tick_time) {
     }
 
     text_layer_set_text(layer_time_text, time_text);
+
+#ifdef FORTUNA
+}
+void update_second_time(struct tm *tick_time) {
+#endif
 	
 #ifdef HANGOUT
     static int word_idx;
@@ -181,6 +186,8 @@ void update_time(struct tm *tick_time) {
 	static char owrd_text[64];
     static char blanks[]    = "                                                                ";
 #ifdef FORTUNA
+#define MAX_INTERVAL 300
+    static int count_up;
 #define MAX_LEN 24
     static int subj_idx;
 	static char subj_text[16];
@@ -207,19 +214,29 @@ void update_time(struct tm *tick_time) {
 		cmpl_msk = (1 << word_len) - 1;
 		strncpy(owrd_text, blanks, 2*word_len-1);
   		owrd_text[2*word_len] = '\0';
+	    count_up = 0;
 		new_word = false;
 	} else {
-		if (lttr_msk == cmpl_msk) {
-			new_word = true;
-		} else {
-			rdm_lttr = rand() % word_len;
-			pick_msk = 1 << rdm_lttr;
-			while (lttr_msk & pick_msk) {
-				rdm_lttr = rand() % word_len;
-				pick_msk = 1 << rdm_lttr;	
-			}
-			lttr_msk = lttr_msk | pick_msk;
-		}
+#ifdef FORTUNA
+////		APP_LOG(APP_LOG_LEVEL_DEBUG, "app dbg: %d", count_up);
+	    count_up = count_up + 1;
+	    if (count_up > (MAX_INTERVAL / word_len)) {
+			count_up = 0;
+#endif
+		    if (lttr_msk == cmpl_msk) {
+			    new_word = true;
+		    } else {
+			    rdm_lttr = rand() % word_len;
+			    pick_msk = 1 << rdm_lttr;
+			    while (lttr_msk & pick_msk) {
+				    rdm_lttr = rand() % word_len;
+				    pick_msk = 1 << rdm_lttr;	
+			    }
+			    lttr_msk = lttr_msk | pick_msk;
+		    }
+#ifdef FORTUNA
+        }
+#endif 
 	}
 
 	for (int i=0; i<word_len; i++) { 
@@ -229,7 +246,7 @@ void update_time(struct tm *tick_time) {
 			owrd_text[2*i] = '_'; 
 		}
 	}
-	APP_LOG(APP_LOG_LEVEL_DEBUG, "app dbg: %s %s", word_text, owrd_text);
+////	APP_LOG(APP_LOG_LEVEL_DEBUG, "app dbg: %s %s", word_text, owrd_text);
 	
 #ifdef FORTUNA
 	text_layer_set_text(layer_subj_text, subj_text);
@@ -237,6 +254,16 @@ void update_time(struct tm *tick_time) {
 	text_layer_set_text(layer_word_text, owrd_text);
 }
 #endif
+
+#ifdef FORTUNA
+void handle_second_tick(struct tm *tick_time, TimeUnits units_changed) {
+	update_second_time(tick_time);
+}
+#endif 
+	
+void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed) {
+	update_minute_time(tick_time);
+}
 
 void set_style(void) {
     bool inverse = persist_read_bool(STYLE_KEY);
@@ -262,11 +289,10 @@ void force_update(void) {
     handle_battery(battery_state_service_peek());
     handle_bluetooth(bluetooth_connection_service_peek());
     time_t now = time(NULL);
-    update_time(localtime(&now));
-}
-
-void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed) {
-    update_time(tick_time);
+    update_minute_time(localtime(&now));
+#ifdef FORTUNA
+    update_second_time(localtime(&now));
+#endif
 }
 
 void handle_deinit(void) {
@@ -388,6 +414,9 @@ void handle_init(void) {
     bluetooth_connection_service_subscribe(&handle_bluetooth);
     app_focus_service_subscribe(&handle_appfocus);
     tick_timer_service_subscribe(MINUTE_UNIT, handle_minute_tick);
+#ifdef FORTUNA
+    tick_timer_service_subscribe(SECOND_UNIT, handle_second_tick);
+#endif
     accel_tap_service_subscribe(handle_tap);
     app_timer_register(2000, handle_tap_timeout, NULL);
 

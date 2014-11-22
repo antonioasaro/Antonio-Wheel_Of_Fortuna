@@ -50,28 +50,33 @@
                 "type": "png"
             },
             {
+                "compatibility": "2.7",
                 "file": "fonts/Roboto-Condensed.ttf",
                 "name": "FONT_ROBOTO_CONDENSED_18",
                 "type": "font"
             },
             {
+                "compatibility": "2.7",
                 "file": "fonts/Roboto-Condensed.ttf",
                 "name": "FONT_ROBOTO_CONDENSED_22",
                 "type": "font"
             },
             {
+                "compatibility": "2.7",
                 "file": "fonts/Roboto-Condensed.ttf",
                 "name": "FONT_ROBOTO_CONDENSED_20",
                 "type": "font"
             },
             {
                 "characterRegex": "[:0-9]",
+                "compatibility": "2.7",
                 "file": "fonts/Roboto-Bold.ttf",
                 "name": "FONT_ROBOTO_BOLD_SUBSET_44",
                 "type": "font"
             },
             {
                 "characterRegex": "[:0-9]",
+                "compatibility": "2.7",
                 "file": "fonts/Roboto-Bold.ttf",
                 "name": "FONT_ROBOTO_BOLD_SUBSET_48",
                 "type": "font"
