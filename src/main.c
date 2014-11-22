@@ -1,5 +1,6 @@
 #include "pebble.h"
 #include "vars.h"
+#include <ctype.h>
 
 GColor background_color = GColorWhite;
 GColor foreground_color = GColorBlack;
@@ -236,6 +237,13 @@ void update_time(struct tm *tick_time) {
 
 	for (int i=0; i<word_len; i++) { 
 		if ((lttr_msk & (1<<i)) || (word_text[i] == ' ')) {
+#ifdef FORTUNA
+	    if (i==0 || (i>1 && (word_text[i-1]==' '))) {
+			// do nothing
+		} else { 
+		    if (word_text[i] >= 65 && word_text[i] <= 90) word_text[i]=word_text[i] + 32;
+		}
+#endif
 			owrd_text[2*i] = word_text[i];
 	} else {
 			owrd_text[2*i] = '_'; 
