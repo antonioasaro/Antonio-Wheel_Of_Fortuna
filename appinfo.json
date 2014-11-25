@@ -86,7 +86,7 @@
     "shortName": "Fortuna",
     "uuid": "b95eda21-5326-4fb0-ba9f-d2b1d259f6cc",
     "versionCode": 1,
-    "versionLabel": "1.0",
+    "versionLabel": "1.2",
     "watchapp": {
         "watchface": true
     }

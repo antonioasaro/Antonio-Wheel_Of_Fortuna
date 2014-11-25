@@ -4,7 +4,7 @@ int STYLE_KEY = 1;
 
 
 // Random Words
-#define WWL_LEN 5
+#define WWL_LEN 50
 #define WWL_SBJ "Random"
 const char *wwlst[] = {
   "SPLASHING",
@@ -12,6 +12,56 @@ const char *wwlst[] = {
   "BLUEPRINT",
   "BREAKFAST",
   "BUTTERFLY"
+  "Weather",
+  "Weekend",
+  "Wettest",
+  "Wriggle",
+  "Wrinkle",
+  "Written",
+  "Brother",
+  "Present",
+  "Program",
+  "Twitter",
+  "Against",
+  "General",
+  "However",
+  "Airport",
+  "Anybody",
+  "Sentence",
+  "Together",
+  "Children",
+  "Mountain",
+  "Chipmunk",
+  "Crashing",
+  "Drinking",
+  "Insisted",
+  "Insulted",
+  "Invented",
+  "Squinted",
+  "Standing",
+  "Swishing",
+  "Talented",
+  "Whiplash",
+  "Complain",
+  "Granddad",
+  "Sprinkle",
+  "Surprise",
+  "Umbrella",
+  "Anything",
+  "Anywhere",
+  "Baseball",
+  "Birthday",
+  "Bluebird",
+  "Cheerful",
+  "Colorful",
+  "Daylight",
+  "Doghouse",
+  "Driveway",
+  "Everyone",
+  "Faithful",
+  "Flagpole",
+  "Graceful",
+  "Grateful"	  
  };
 
 #ifdef FORTUNA
@@ -3119,7 +3169,7 @@ const char *eelst[] = {
 **********************************************************/
 
 // Things
-#define FF_LEN 175     		// 3307-3122+1
+#define FF_LEN 110     		// 3307-3122+1
 #define FF_SBJ "Things"
 const char *fflst[] = {
   "ABBREVIATION OF A WORD",
@@ -3247,7 +3297,10 @@ const char *fflst[] = {
   "PARTY FLAVORS",
   "PAY PERIOD",
   "PEARL EARRINGS",
-  "PIPE WRENCH",
+  "PIPE WRENCH"
+};
+
+/**********************************************************	
   "PIRATE BOOTY",
   "PLATFORM SHOES",
   "POCKET WORLD ATLAS",
@@ -3310,7 +3363,6 @@ const char *fflst[] = {
   "YOUTH & BEAUTY",
 };
 
-/**********************************************************
 // Title
 #define GGL_LEN 5
 const char *ggsbj = "House";

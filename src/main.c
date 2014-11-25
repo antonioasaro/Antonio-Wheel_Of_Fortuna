@@ -182,7 +182,7 @@ void update_time(struct tm *tick_time) {
 	static char owrd_text[64];
     static char blanks[]    = "                                                                ";
 #ifdef FORTUNA
-#define MAX_INTERVAL 120
+#define MAX_INTERVAL 300
     static int count_up;
 #define MAX_LEN 24
     static int subj_idx;
@@ -203,6 +203,8 @@ void update_time(struct tm *tick_time) {
 			if (strlen(strlst[subj_idx][word_idx]) < MAX_LEN) { done = 1; }
 	    }
 	    strcpy(word_text, strlst[subj_idx][word_idx]);
+	    for (unsigned int j=0; j<strlen(word_text); j++) 
+			if ((word_text[j]==' ') || (word_text[j]=='\'') || (word_text[j]=='-')) lttr_msk = lttr_msk | (1<<j);
 #else
 		word_idx = rand() % WWL_LEN;
 		strcpy(word_text, wwlst[word_idx]);
@@ -236,16 +238,16 @@ void update_time(struct tm *tick_time) {
 	}
 
 	for (int i=0; i<word_len; i++) { 
-		if ((lttr_msk & (1<<i)) || (word_text[i] == ' ')) {
+		if (lttr_msk & (1<<i)) {
 #ifdef FORTUNA
-	    if (i==0 || (i>1 && (word_text[i-1]==' '))) {
-			// do nothing
-		} else { 
-		    if (word_text[i] >= 65 && word_text[i] <= 90) word_text[i]=word_text[i] + 32;
-		}
+	        if (i==0 || (i>1 && (word_text[i-1]==' '))) {
+			    // do nothing
+		    } else { 
+		        if (word_text[i] >= 65 && word_text[i] <= 90) word_text[i]=word_text[i] + 32;
+		    }
 #endif
 			owrd_text[2*i] = word_text[i];
-	} else {
+	    } else {
 			owrd_text[2*i] = '_'; 
 		}
 	}
